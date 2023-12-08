@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="bg-[url('/assets/images/bg.png')] bg-cover">
-          <div className="flex w-full min-h-screen py-8 px-6">
+          <div className="flex w-full max-h-screen py-8 px-6">
             <div className="w-1/6 bg-white flex justify-center rounded-s-lg">
               <Sidebar />
             </div>

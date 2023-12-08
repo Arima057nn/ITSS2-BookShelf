@@ -6,13 +6,13 @@ const quantity = 2;
 
 const Bookitem = () => {
   return (
-    <div className="px-8 text-gray-700">
+    <div className="px-8 mb-4 text-gray-700">
       <div className="flex w-full bg-white rounded-lg shadow-md">
         <div className="w-4/12 flex p-4">
           <Image
             src="/assets/images/book.png"
-            width={75}
-            height={75}
+            width={60}
+            height={60}
             alt="Picture of the author"
           />
           <div className="ml-8 flex flex-col justify-center">
