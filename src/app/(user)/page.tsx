@@ -4,16 +4,10 @@ import Category from "../components/category";
 import Search from "../components/search";
 import { bookApi } from "@/app/services";
 import { useEffect } from "react";
+import { Books } from "../data/book";
+import { BookInfo } from "../models/common";
 
 export default function Home() {
-  useEffect(() => {
-    getBooks();
-  }, []);
-
-  const getBooks = async () => {
-    let res = await bookApi.getBooks();
-    console.log("resssss: ", res.data);
-  };
   return (
     <div>
       <Search />
@@ -25,13 +19,9 @@ export default function Home() {
         <div className="w-2/12 text-center">Status</div>
         <div className="w-3/12 text-center">Library</div>
       </div>
-      <Bookitem />
-      <Bookitem />
-      <Bookitem />
-      <Bookitem />
-      <Bookitem />
-      <Bookitem />
-      <Bookitem />
+      {Books.map((book: BookInfo, index) => (
+        <Bookitem key={index} book={book} />
+      ))}
     </div>
   );
 }

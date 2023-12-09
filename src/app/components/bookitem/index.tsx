@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import { BookInfo } from "@/app/models/common";
+import Link from "next/link";
 
-const quantity = 2;
-
-const Bookitem = () => {
+const Bookitem: React.FC<{ book: BookInfo }> = ({ book }) => {
   return (
     <div className="px-8 mb-4 text-gray-700">
       <div className="flex w-full bg-white rounded-lg shadow-md">
@@ -16,28 +16,31 @@ const Bookitem = () => {
             alt="Picture of the author"
           />
           <div className="ml-8 flex flex-col justify-center">
-            <p className="text-lg">Don't Make Me Think</p>
+            <Link href={`/book/${book.id}`}>
+              <p className="text-lg">{book.title}</p>
+            </Link>
             <div className="flex flex-col justify-around mt-2">
-              <p className="text-base">Steve Krug 2000</p>
-              <p className="text-xs">Second Edition</p>
+              <p className="text-sm">
+                {book.publisher} {book.publish_year}
+              </p>
             </div>
           </div>
         </div>
         <div className="w-2/12 flex justify-center flex-col">
-          <p className="text-lg">Computer Science</p>
-          <p className="text-base mt-2">UX Design</p>
+          <p className="text-base">Computer Science</p>
+          {/* <p className="text-base mt-2">UX Design</p> */}
         </div>
         <div className="w-2/12 flex justify-center flex-col items-center">
           <div
             className={`text-base w-20 text-center rounded text-gray-200 ${
-              quantity !== 0 ? "bg-green-500" : "bg-red-500"
+              book.quantity !== 0 ? "bg-green-500" : "bg-red-500"
             }`}
           >
-            20
+            {book.quantity}
           </div>
-          {quantity !== 0 && (
+          {book.quantity !== 0 && (
             <div className="flex items-center mt-2">
-              <p className="text-base">CS A-15</p>
+              <p className="text-base">{book.library_location}</p>
             </div>
           )}
         </div>
@@ -45,7 +48,7 @@ const Bookitem = () => {
           <div className="text-orange-500">
             <FmdGoodIcon />
           </div>
-          <p className="text-base font-bold">Ta Quang Buu Library</p>
+          <p className="text-base font-bold">{book.library_name}</p>
         </div>
       </div>
     </div>

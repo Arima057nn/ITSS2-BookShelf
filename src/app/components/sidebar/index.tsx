@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import SearchIcon from "@mui/icons-material/Search";
+import Link from "next/link";
 
 const Sidebar = () => {
   return (
@@ -15,10 +16,12 @@ const Sidebar = () => {
       />
 
       <div className="flex flex-col text-zinc-400">
-        <div className="flex items-center pt-4">
-          <SearchIcon />
-          <span className="ml-2">Search</span>
-        </div>
+        <Link href="/">
+          <div className="flex items-center pt-4">
+            <SearchIcon />
+            <span className="ml-2">Search</span>
+          </div>
+        </Link>
         <div className="flex items-center pt-4">
           <SearchIcon />
           <span className="ml-2">Request List</span>
