@@ -6,11 +6,15 @@ import { bookApi } from "@/app/services";
 import { useEffect } from "react";
 import { Books } from "../data/book";
 import { BookInfo } from "../models/common";
+import Action from "../components/action";
 
 export default function Home() {
   return (
     <div>
-      <Search />
+      <div className="flex justify-between items-center pt-6 pb-4 mx-8">
+        <Search />
+        <Action />
+      </div>
       <Category />
 
       <div className="flex w-full px-8 pt-8 pb-4 font-medium text-lg">

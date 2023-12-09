@@ -3,7 +3,7 @@
 import SearchIcon from "@mui/icons-material/Search";
 const Search = () => {
   return (
-    <div className="mx-8 mt-8 mb-4 bg-white max-w-fit rounded-full flex items-center border-2 border-gray-400">
+    <div className=" bg-white max-w-fit rounded-full flex items-center border-2 border-gray-200 hover:border-gray-400">
       <div className="w-28 flex p-3 justify-center bg-gray-300 rounded-s-full">
         <select
           name="cars"
