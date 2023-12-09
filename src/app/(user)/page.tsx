@@ -1,8 +1,19 @@
+"use client";
 import Bookitem from "../components/bookitem";
 import Category from "../components/category";
 import Search from "../components/search";
+import { bookApi } from "@/app/services";
+import { useEffect } from "react";
 
 export default function Home() {
+  useEffect(() => {
+    getBooks();
+  }, []);
+
+  const getBooks = async () => {
+    let res = await bookApi.getBooks();
+    console.log("resssss: ", res.data);
+  };
   return (
     <div>
       <Search />
