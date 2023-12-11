@@ -1,10 +1,11 @@
 import axios from "axios";
 
 export const axiosClient = axios.create({
-  baseURL: "https://reqres.in/api/users?page=2",
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL_API,
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 });
 
 axiosClient.interceptors.response.use(

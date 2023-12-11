@@ -9,6 +9,14 @@ import { BookInfo } from "../models/common";
 import Action from "../components/action";
 
 export default function Home() {
+  useEffect(() => {
+    getBooks();
+  }, []);
+
+  const getBooks = async () => {
+    let res = await bookApi.getBooks();
+    console.log("resssss: ", res);
+  };
   return (
     <div>
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">
