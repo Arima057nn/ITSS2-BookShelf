@@ -3,18 +3,19 @@ import Bookitem from "../components/bookitem";
 import Category from "../components/category";
 import Search from "../components/search";
 import { bookApi } from "@/app/services";
-import { useEffect } from "react";
-import { Books } from "../data/book";
-import { BookInfo } from "../models/common";
+import { useEffect, useState } from "react";
 import Action from "../components/action";
 
 export default function Home() {
+  const [books, setBooks] = useState<any>([]);
+
   useEffect(() => {
     getBooks();
   }, []);
 
   const getBooks = async () => {
     let res = await bookApi.getBooks();
+    setBooks(res.data);
   };
   return (
     <div>
@@ -30,7 +31,7 @@ export default function Home() {
         <div className="w-2/12 text-center">Status</div>
         <div className="w-3/12 text-center">Library</div>
       </div>
-      {Books.map((book: BookInfo, index) => (
+      {books.map((book: any, index: number) => (
         <Bookitem key={index} book={book} />
       ))}
     </div>
