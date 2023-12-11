@@ -5,12 +5,25 @@ export const axiosClient = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  withCredentials: true,
+  // withCredentials: true,
 });
 
 axiosClient.interceptors.response.use(
   function (response) {
-    return response.data;
+    return response;
+  },
+  function (error) {
+    return error;
+  }
+);
+
+axiosClient.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
   },
   function (error) {
     return Promise.reject(error);

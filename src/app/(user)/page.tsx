@@ -15,7 +15,6 @@ export default function Home() {
 
   const getBooks = async () => {
     let res = await bookApi.getBooks();
-    console.log("resssss: ", res);
   };
   return (
     <div>
