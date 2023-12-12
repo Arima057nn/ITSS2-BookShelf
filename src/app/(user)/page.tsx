@@ -6,17 +6,48 @@ import { bookApi } from "@/app/services";
 import { useEffect, useState } from "react";
 import Action from "../components/action";
 import { BooksInterface, LibraryInterface } from "../models/books";
+import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [books, setBooks] = useState<any>([]);
 
-  useEffect(() => {
-    getBooks();
-  }, []);
+  const searchParams = useSearchParams();
 
-  const getBooks = async () => {
-    let res = await bookApi.getBooks();
-    setBooks(res.data);
+  useEffect(() => {
+    if (searchParams.get("title") !== null) getBooks(searchParams.get("title"));
+    else if (searchParams.get("author") !== null)
+      getBooks(searchParams.get("author"));
+    else if (searchParams.get("publishingTime") !== null)
+      getBooks(searchParams.get("publishingTime"));
+    else if (searchParams.get("library") !== null)
+      getBooks(searchParams.get("library"));
+    else {
+      getBooks(searchParams.get("title"));
+    }
+  }, [searchParams]);
+
+  const getBooks = async (search: any) => {
+    console.log("search", search);
+    let res;
+    if (search === null) {
+      search = "";
+      res = await bookApi.searchBook(search, "", "", "");
+    } else {
+      if (searchParams.get("title") !== null) {
+        res = await bookApi.searchBook(search, "", "", "");
+      }
+      if (searchParams.get("author") !== null) {
+        res = await bookApi.searchBook("", search, "", "");
+      }
+      if (searchParams.get("publishingTime") !== null) {
+        res = await bookApi.searchBook("", "", search, "");
+      }
+      if (searchParams.get("library") !== null) {
+        res = await bookApi.searchBook("", "", "", search);
+      }
+    }
+    if (res !== undefined) setBooks(res.data);
+    console.log("res", res);
   };
   return (
     <div>

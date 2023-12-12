@@ -23,7 +23,6 @@ const Bookitem: React.FC<{
   sub_category,
   item,
 }) => {
-  console.log("sub cate:", sub_category);
   return (
     <div className="px-8 mb-4 text-gray-700">
       <div className="flex w-full bg-white rounded-lg shadow-md">

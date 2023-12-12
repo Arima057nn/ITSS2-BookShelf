@@ -30,9 +30,12 @@ const Category = () => {
           <MenuItem value="">
             <em>Category</em>
           </MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={1}>Sience</MenuItem>
+          <MenuItem value={2}>Computer Sience</MenuItem>
+          <MenuItem value={3}>UX Design</MenuItem>
+          <MenuItem value={4}>Romantic</MenuItem>
+          <MenuItem value={5}>Financial</MenuItem>
+          <MenuItem value={6}>Entertainment</MenuItem>
         </Select>
       </FormControl>
     </div>
