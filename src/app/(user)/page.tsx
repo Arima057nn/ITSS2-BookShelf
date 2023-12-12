@@ -5,6 +5,7 @@ import Search from "../components/search";
 import { bookApi } from "@/app/services";
 import { useEffect, useState } from "react";
 import Action from "../components/action";
+import { BooksInterface, LibraryInterface } from "../models/books";
 
 export default function Home() {
   const [books, setBooks] = useState<any>([]);
@@ -31,8 +32,21 @@ export default function Home() {
         <div className="w-2/12 text-center">Status</div>
         <div className="w-3/12 text-center">Library</div>
       </div>
-      {books.map((book: any, index: number) => (
-        <Bookitem key={index} book={book} />
+      {books.map((book: BooksInterface) => (
+        <>
+          {book.librarys.map((item: LibraryInterface) => (
+            <Bookitem
+              quantity={book.bookDto.quantity}
+              publisher={book.bookDto.publisher}
+              author={book.authors[0].name}
+              publish_year={book.bookDto.publish_year}
+              title={book.bookDto.title}
+              category={book.bookDto.category.name}
+              sub_category={book.bookDto.category.parent_category_name}
+              item={item}
+            />
+          ))}
+        </>
       ))}
     </div>
   );
