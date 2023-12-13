@@ -21,6 +21,8 @@ export default function Home() {
       getBooks(searchParams.get("publishingTime"));
     else if (searchParams.get("library") !== null)
       getBooks(searchParams.get("library"));
+    else if (searchParams.get("categoryId") !== null)
+      getBooks(searchParams.get("categoryId"));
     else {
       getBooks(searchParams.get("title"));
     }
@@ -31,19 +33,22 @@ export default function Home() {
     let res;
     if (search === null) {
       search = "";
-      res = await bookApi.searchBook(search, "", "", "");
+      res = await bookApi.searchBook(search, "", "", "", "");
     } else {
       if (searchParams.get("title") !== null) {
-        res = await bookApi.searchBook(search, "", "", "");
+        res = await bookApi.searchBook(search, "", "", "", "");
       }
       if (searchParams.get("author") !== null) {
-        res = await bookApi.searchBook("", search, "", "");
+        res = await bookApi.searchBook("", search, "", "", "");
       }
       if (searchParams.get("publishingTime") !== null) {
-        res = await bookApi.searchBook("", "", search, "");
+        res = await bookApi.searchBook("", "", search, "", "");
       }
       if (searchParams.get("library") !== null) {
-        res = await bookApi.searchBook("", "", "", search);
+        res = await bookApi.searchBook("", "", "", search, "");
+      }
+      if (searchParams.get("categoryId") !== null) {
+        res = await bookApi.searchBook("", "", "", "", search);
       }
     }
     if (res !== undefined) setBooks(res.data);

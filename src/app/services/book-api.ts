@@ -13,42 +13,56 @@ export const bookApi = {
     title: string | null,
     authorName: string | null,
     publishYear: string | null,
-    libraryName: string | null
+    libraryName: string | null,
+    categoryId: string | null,
   ) {
     if (
       title === "" &&
       libraryName === "" &&
       authorName === "" &&
-      publishYear === ""
+      publishYear === "" &&
+      categoryId === ""
     )
       return axiosClient.get(`/book/list`);
     else if (
       title !== "" &&
       libraryName === "" &&
       authorName === "" &&
-      publishYear === ""
+      publishYear === "" &&
+      categoryId === ""
     )
       return axiosClient.get(`/book/search?title=${title}`);
     else if (
       title === "" &&
       libraryName !== "" &&
       authorName === "" &&
-      publishYear === ""
+      publishYear === "" &&
+      categoryId === ""
     )
       return axiosClient.get(`/book/search?libraryname=${libraryName}`);
     else if (
       title === "" &&
       libraryName === "" &&
       authorName !== "" &&
-      publishYear === ""
+      publishYear === "" && 
+      categoryId === ""
     )
       return axiosClient.get(`/book/search?authorName=${authorName}`);
     else if (
       title === "" &&
       libraryName === "" &&
       authorName === "" &&
-      publishYear !== ""
+      publishYear !== "" &&
+      categoryId === ""
     )
       return axiosClient.get(`/book/search?publishYear=${publishYear}`);
+    else if (
+      title === "" &&
+      libraryName === "" &&
+      authorName === "" &&
+      publishYear === "" &&
+      categoryId !== ""
+    )
+      return axiosClient.get(`/book/search?categoryId=${categoryId}`);
   },
 };
