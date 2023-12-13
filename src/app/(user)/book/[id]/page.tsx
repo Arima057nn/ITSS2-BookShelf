@@ -16,6 +16,8 @@ export default function Page({ params }: { params: { id: number } }) {
 
   const getBook = async () => {
     let res = await bookApi.getBook(id);
+    console.log(res.data);
+    
     setBook(res.data);
   };
   return (

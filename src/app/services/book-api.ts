@@ -39,7 +39,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?libraryname=${libraryName}`);
+      return axiosClient.get(`/book/search?libraryName=${libraryName}`);
     else if (
       title === "" &&
       libraryName === "" &&
