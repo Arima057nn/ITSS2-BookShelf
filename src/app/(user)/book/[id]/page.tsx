@@ -96,7 +96,7 @@ export default function Page({ params }: { params: { id: number } }) {
 
             <p className="font-bold text-gray-700 text-sm mb-2">Other Books</p>
             <div className="flex">
-              <Image
+              {/* <Image
                 src="/assets/images/book2.png"
                 width={75}
                 height={75}
@@ -108,7 +108,17 @@ export default function Page({ params }: { params: { id: number } }) {
                 width={75}
                 height={75}
                 alt="Picture of the author"
-              />
+              /> */}
+              {book?.ortherBooks.map((item, index) => {
+                return (
+                    <Image
+                      src={item.cover_image_url}
+                      width={75}
+                      height={75}
+                      alt="Picture of the author"
+                    />
+                )
+              })}
             </div>
           </div>
         </div>
