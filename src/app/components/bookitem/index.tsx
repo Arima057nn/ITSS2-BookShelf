@@ -2,12 +2,12 @@
 import Image from "next/image";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import Link from "next/link";
-import { LibraryInterface } from "@/app/models/books";
+import { Author, LibraryInterface } from "@/app/models/books";
 
 const Bookitem: React.FC<{
   quantity: number;
   publisher: string;
-  author: string;
+  author: Author[];
   publish_year: number;
   title: string;
   category: string;
@@ -23,6 +23,7 @@ const Bookitem: React.FC<{
   sub_category,
   item,
 }) => {
+  console.log("item", author);
   return (
     <div className="px-8 mb-4 text-gray-700">
       <div className="flex w-full bg-white rounded-lg shadow-md">
@@ -34,12 +35,15 @@ const Bookitem: React.FC<{
             alt="Picture of the author"
           />
           <div className="ml-8 flex flex-col justify-center">
-            <Link href={`/book/1`}>
+            <Link href={`/book/${item.id}`}>
               <p className="text-lg">{title}</p>
             </Link>
             <div className="flex flex-col justify-around mt-2">
               <p className="text-sm">
-                {publisher}, {publish_year}
+                {author.map((item: Author) => (
+                  <span>{item.name}, </span>
+                ))}
+                {publish_year}
               </p>
             </div>
           </div>

@@ -63,13 +63,13 @@ export default function Home() {
         <div className="w-2/12 text-center">Status</div>
         <div className="w-3/12 text-center">Library</div>
       </div>
-      {books.map((book: BooksInterface) => (
+      {books?.map((book: BooksInterface) => (
         <>
-          {book.librarys.map((item: LibraryInterface) => (
+          {book.librarys?.map((item: LibraryInterface) => (
             <Bookitem
               quantity={book.bookDto.quantity}
               publisher={book.bookDto.publisher}
-              author={book.authors[0].name}
+              author={book.authors}
               publish_year={book.bookDto.publish_year}
               title={book.bookDto.title}
               category={book.bookDto.category.name}

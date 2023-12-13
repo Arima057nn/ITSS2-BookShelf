@@ -23,7 +23,7 @@ const Search = () => {
         router.push(`/?library=${query}`);
       }
     }
-  }, [query, router]);
+  }, [query, router, option]);
   return (
     <div className=" bg-white max-w-fit rounded-full flex items-center border-2 border-gray-200 hover:border-gray-400">
       <div className="w-36 flex p-3 justify-center bg-gray-300 rounded-s-full">
