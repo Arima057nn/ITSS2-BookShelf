@@ -32,7 +32,7 @@ const Bookitem: React.FC<{
             src="/assets/images/book.png"
             width={60}
             height={60}
-            alt="Picture of the author"
+            alt="Image of the author"
           />
           <div className="ml-8 flex flex-col justify-center">
             <Link href={`/book/${item.id}`}>
