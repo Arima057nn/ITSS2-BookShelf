@@ -14,7 +14,7 @@ export const bookApi = {
     authorName: string | null,
     publishYear: string | null,
     libraryName: string | null,
-    categoryId: string | null,
+    categoryId: string | null
   ) {
     if (
       title === "" &&
@@ -44,7 +44,7 @@ export const bookApi = {
       title === "" &&
       libraryName === "" &&
       authorName !== "" &&
-      publishYear === "" && 
+      publishYear === "" &&
       categoryId === ""
     )
       return axiosClient.get(`/book/search?authorName=${authorName}`);

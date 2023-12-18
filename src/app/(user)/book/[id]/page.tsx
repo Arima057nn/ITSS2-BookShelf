@@ -1,10 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import { useEffect, useState } from "react";
 import { bookApi } from "@/app/services";
-import { BookDetailInterface } from "@/app/models/common";
+import {
+  BookDetailInterface,
+  Author,
+  LibraryInterface,
+} from "@/app/models/common";
 
 export default function Page({ params }: { params: { id: number } }) {
   const { id } = params;
@@ -17,7 +20,7 @@ export default function Page({ params }: { params: { id: number } }) {
   const getBook = async () => {
     let res = await bookApi.getBook(id);
     console.log(res.data);
-    
+
     setBook(res.data);
   };
   return (
@@ -38,34 +41,21 @@ export default function Page({ params }: { params: { id: number } }) {
             <p className="text-3xl">{book?.book.title}</p>
             <p className="text-base">
               By{" "}
-              <span className="underline decoration-solid">
-                {book?.authors[0].name}
+              <span className="decoration-solid underline">
+                {book?.authors.map((item: Author) => (
+                  <span>{item.name}, </span>
+                ))}
               </span>
-              , {book?.book.publish_year}
+              {book?.book.publish_year}
             </p>
             <p className="text-xs text-gray-400 mb-8">{book?.book.publisher}</p>
             <p className="text-sm text-gray-700 font-semibold">Status</p>
             <div>
-              <div
-                className={`text-base w-20 text-center my-2 rounded text-gray-200 ${
-                  book?.book.quantity !== 0 ? "bg-green-500" : "bg-red-500"
-                }`}
-              >
-                {book?.book.quantity}
-              </div>
-              {book?.book.quantity !== 0 && (
-                <div>
-                  <div className="flex items-center">
-                    <div className="text-orange-500">
-                      <FmdGoodIcon />
-                    </div>
-                    <p className="text-base">{book?.libraryDto.location}</p>
-                  </div>
-                  <p className="text-base font-bold my-4">
-                    {book?.libraryDto.name}
-                  </p>
-                </div>
-              )}
+              {book?.librarys.map((item: LibraryInterface) => (
+                <p className="text-base text-gray-700 font-semibold">
+                  {item.library.name} ({item.quantity})
+                </p>
+              ))}
             </div>
             <button className="rounded px-2 py-3 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600">
               Add to request list
@@ -96,28 +86,15 @@ export default function Page({ params }: { params: { id: number } }) {
 
             <p className="font-bold text-gray-700 text-sm mb-2">Other Books</p>
             <div className="flex">
-              {/* <Image
-                src="/assets/images/book2.png"
-                width={75}
-                height={75}
-                alt="Picture of the author"
-                style={{ marginRight: 16 }}
-              />
-              <Image
-                src="/assets/images/book3.png"
-                width={75}
-                height={75}
-                alt="Picture of the author"
-              /> */}
               {book?.ortherBooks.map((item, index) => {
                 return (
-                    <Image
-                      src={item.cover_image_url}
-                      width={75}
-                      height={75}
-                      alt="Picture of the author"
-                    />
-                )
+                  <Image
+                    src={item.cover_image_url}
+                    width={75}
+                    height={75}
+                    alt="Picture of the author"
+                  />
+                );
               })}
             </div>
           </div>

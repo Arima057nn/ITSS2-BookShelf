@@ -5,7 +5,7 @@ import Search from "../components/search";
 import { bookApi } from "@/app/services";
 import { useEffect, useState } from "react";
 import Action from "../components/action";
-import { BooksInterface, LibraryInterface } from "../models/books";
+import { BooksInterface } from "../models/books";
 import { useSearchParams } from "next/navigation";
 
 export default function Home() {
@@ -51,8 +51,8 @@ export default function Home() {
         res = await bookApi.searchBook("", "", "", "", search);
       }
     }
-    if (res !== undefined) setBooks(res.data);
-    console.log("res", res);
+    if (res !== undefined) setBooks(res.data?.content);
+    // console.log("res", res?.data.content);
   };
   return (
     <div>
@@ -69,20 +69,7 @@ export default function Home() {
         <div className="w-3/12 text-center">Library</div>
       </div>
       {books?.map((book: BooksInterface) => (
-        <>
-          {book.librarys?.map((item: LibraryInterface) => (
-            <Bookitem
-              quantity={book.bookDto.quantity}
-              publisher={book.bookDto.publisher}
-              author={book.authors}
-              publish_year={book.bookDto.publish_year}
-              title={book.bookDto.title}
-              category={book.bookDto.category.name}
-              sub_category={book.bookDto.category.parent_category_name}
-              item={item}
-            />
-          ))}
-        </>
+        <Bookitem book={book} />
       ))}
     </div>
   );

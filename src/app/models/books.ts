@@ -7,19 +7,21 @@ export interface Author {
 }
 
 export interface LibraryInterface {
-  id: number;
-  name: string;
-  location: string;
-  created_at: string;
-  updated_at: string;
+  library: {
+    id: number | string;
+    name: string;
+    location: string;
+    created_at: string;
+    updated_at: string;
+  };
+  quantity: number;
 }
 
 export interface BooksInterface {
-  bookDto: {
+  book: {
     id: number;
     title: string;
     description: string;
-    quantity: number;
     cover_image_url: string;
     category: {
       id: number;
@@ -35,8 +37,6 @@ export interface BooksInterface {
     page_number: number;
     created_at: string;
     updated_at: string;
-    authorBookDtos: null;
-    libraryBookDtos: null;
   };
   authors: Author[];
   librarys: LibraryInterface[];
