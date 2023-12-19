@@ -50,13 +50,27 @@ export default function Page({ params }: { params: { id: number } }) {
             </p>
             <p className="text-xs text-gray-400 mb-8">{book?.book.publisher}</p>
             <p className="text-sm text-gray-700 font-semibold">Status</p>
-            <div>
+            <form>
               {book?.librarys.map((item: LibraryInterface) => (
-                <p className="text-base text-gray-700 font-semibold">
-                  {item.library.name} ({item.quantity})
-                </p>
+                <div key={item.library.id}>
+                  <input
+                    className="my-3 mr-2"
+                    type="radio"
+                    id={`library-${item.library.id}`}
+                    name="fav_language"
+                    value={item.library.id}
+                  />
+                  <label
+                    className="text-base text-gray-700 font-semibold"
+                    htmlFor={`library-${item.library.id}`}
+                  >
+                    {`${item.library.name} (${item.quantity})`}
+                  </label>
+                  <br />
+                </div>
               ))}
-            </div>
+            </form>
+
             <button className="rounded px-2 py-3 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600">
               Add to request list
             </button>

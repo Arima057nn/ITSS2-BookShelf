@@ -52,7 +52,6 @@ export default function Home() {
       }
     }
     if (res !== undefined) setBooks(res.data?.content);
-    // console.log("res", res?.data.content);
   };
   return (
     <div>
@@ -63,10 +62,9 @@ export default function Home() {
       <Category />
 
       <div className="flex w-full px-8 pt-8 pb-4 font-medium text-lg">
-        <div className="w-4/12">Title</div>
-        <div className="w-2/12">Category</div>
-        <div className="w-2/12 text-center">Status</div>
-        <div className="w-3/12 text-center">Library</div>
+        <div className="w-5/12">Title</div>
+        <div className="w-3/12 text-center">Status</div>
+        <div className="w-3/12">Category</div>
       </div>
       {books?.map((book: BooksInterface) => (
         <Bookitem book={book} />

@@ -10,7 +10,7 @@ const Bookitem: React.FC<{
   return (
     <div className="px-8 mb-4 text-gray-700">
       <div className="flex w-full bg-white rounded-lg shadow-md">
-        <div className="w-4/12 flex p-4">
+        <div className="w-5/12 flex p-4">
           <Image
             src={book.book.cover_image_url}
             width={60}
@@ -22,29 +22,18 @@ const Bookitem: React.FC<{
               <p className="text-lg">{book.book.title}</p>
             </Link>
             <div className="flex flex-col justify-around mt-2">
-              <p className="text-sm">
-                {book.authors.map((item: Author) => (
-                  <span>{item.name}, </span>
-                ))}
-                {book.book.publish_year}
-              </p>
+              <p className="text-sm">{book.book.publish_year}</p>
             </div>
           </div>
         </div>
-        <div className="w-2/12 flex justify-center flex-col">
+        <div className="w-3/12 flex justify-center flex-col items-center"></div>
+        <div className="w-3/12 flex justify-center flex-col">
           <p className="text-base">{book.book.category.name}</p>
           {book.book.category.parent_category_name !== null && (
             <p className="text-base mt-2">
               {book.book.category.parent_category_name}
             </p>
           )}
-        </div>
-        <div className="w-2/12 flex justify-center flex-col items-center"></div>
-        <div className="w-3/12 flex justify-center items-center">
-          <div className="text-orange-500">
-            <FmdGoodIcon />
-          </div>
-          {/* <p className="text-base font-bold">{book.library.name}</p> */}
         </div>
       </div>
     </div>
