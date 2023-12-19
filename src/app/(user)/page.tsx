@@ -61,7 +61,7 @@ export default function Home() {
       </div>
       <Category />
 
-      <div className="flex w-full px-8 pt-8 pb-4 font-medium text-lg">
+      <div className="flex w-full px-8 pt-8 pb-4 font-medium text-base">
         <div className="w-5/12">Title</div>
         <div className="w-3/12 text-center">Status</div>
         <div className="w-3/12">Category</div>

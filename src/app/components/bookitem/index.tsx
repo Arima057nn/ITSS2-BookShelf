@@ -13,8 +13,8 @@ const Bookitem: React.FC<{
         <div className="w-5/12 flex p-4">
           <Image
             src={book.book.cover_image_url}
-            width={60}
-            height={60}
+            width={56}
+            height={56}
             alt="Image of the author"
           />
           <div className="ml-8 flex flex-col justify-center">
