@@ -2,16 +2,18 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { bookApi } from "@/app/services";
+import { bookApi, requestApi } from "@/app/services";
 import {
   BookDetailInterface,
   Author,
   LibraryInterface,
 } from "@/app/models/common";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const [book, setBook] = useState<BookDetailInterface>();
+  const [selectedLibrary, setSelectedLibrary] = useState("");
 
   useEffect(() => {
     getBook();
@@ -19,10 +21,19 @@ export default function Page({ params }: { params: { id: number } }) {
 
   const getBook = async () => {
     let res = await bookApi.getBook(id);
-    console.log(res.data);
-
     setBook(res.data);
   };
+
+  const handleAddBook = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await requestApi.AddBookToBorrow(1, id, selectedLibrary);
+      toast.success(res.data);
+    } catch (error) {
+      console.error("Error adding book to borrow:", error);
+    }
+  };
+
   return (
     <div className="flex p-8 ">
       <div className="flex flex-col">
@@ -57,8 +68,9 @@ export default function Page({ params }: { params: { id: number } }) {
                     className="my-3 mr-2"
                     type="radio"
                     id={`library-${item.library.id}`}
-                    name="fav_language"
                     value={item.library.id}
+                    checked={selectedLibrary === item.library.id}
+                    onChange={() => setSelectedLibrary(item.library.id)}
                   />
                   <label
                     className="text-base text-gray-700 font-semibold"
@@ -69,13 +81,15 @@ export default function Page({ params }: { params: { id: number } }) {
                   <br />
                 </div>
               ))}
+              <button
+                onClick={(e) => handleAddBook(e)}
+                className="rounded px-2 py-3 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600"
+              >
+                Add to request list
+              </button>
             </form>
-
-            <button className="rounded px-2 py-3 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600">
-              Add to request list
-            </button>
           </div>
-          <div className="w-5/12 bg-white rounded-lg p-6 flex flex-col min-h-fit">
+          <div className="w-5/12 bg-white rounded-lg p-6 flex flex-col h-96">
             <div className="flex justify-between">
               <div className="flex flex-col w-3/5">
                 <p className="font-semibold text-2xl">

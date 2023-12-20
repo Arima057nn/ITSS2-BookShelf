@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../../app/globals.css";
 import Sidebar from "../components/sidebar";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +29,7 @@ export default function RootLayout({
               <div className=""></div>
               <div className="mx-8 w-fit"></div>
               <div className="overflow-auto">{children}</div>
+              <ToastContainer />
             </div>
           </div>
         </div>

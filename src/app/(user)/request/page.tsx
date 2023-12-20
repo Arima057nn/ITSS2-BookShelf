@@ -33,7 +33,7 @@ export default function Request() {
       </div>
 
       <div>
-        {requests.map((item: BorrowRequestInterface) => (
+        {requests?.map((item: BorrowRequestInterface) => (
           <Requestitem request={item} />
         ))}
       </div>
