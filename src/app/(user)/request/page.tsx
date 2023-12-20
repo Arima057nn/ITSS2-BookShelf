@@ -1,14 +1,21 @@
 "use client";
-import { bookApi } from "@/app/services";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import Search from "@/app/components/search";
 import Action from "@/app/components/action";
 import Requestitem from "@/app/components/requestitem";
+import { requestApi } from "@/app/services/request-api";
+import { BorrowRequestInterface } from "@/app/models/request";
 
 export default function Request() {
-  const [books, setBooks] = useState<any>([]);
+  const [requests, setRequests] = useState<any>([]);
+  useEffect(() => {
+    getRequests();
+  }, []);
 
+  const getRequests = async () => {
+    let res = await requestApi.getRequestByUser(1);
+    setRequests(res.data);
+  };
+  console.log("request", requests);
   return (
     <div>
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">
@@ -24,7 +31,12 @@ export default function Request() {
         <div className="w-2/12 text-center">Borrow Date</div>
         <div className="w-2/12 text-center">Request Due Date</div>
       </div>
-      <Requestitem />
+
+      <div>
+        {requests.map((item: BorrowRequestInterface) => (
+          <Requestitem request={item} />
+        ))}
+      </div>
     </div>
   );
 }
