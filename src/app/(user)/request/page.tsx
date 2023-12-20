@@ -15,7 +15,6 @@ export default function Request() {
     let res = await requestApi.getRequestByUser(1);
     setRequests(res.data);
   };
-  console.log("request", requests);
   return (
     <div>
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">

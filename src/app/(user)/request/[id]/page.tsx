@@ -6,10 +6,11 @@ import { requestApi } from "@/app/services";
 import { BookDetailInterface } from "@/app/models/common";
 import Action from "@/app/components/action";
 import { BorrowBookInterface } from "@/app/models/request";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
 
 export default function Page({ params }: { params: { id: number } }) {
   const { id } = params;
-  const [books, setBooks] = useState<any>();
+  const [books, setBooks] = useState<BorrowBookInterface[]>();
 
   useEffect(() => {
     getBooks();
@@ -28,6 +29,14 @@ export default function Page({ params }: { params: { id: number } }) {
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">
         <p className=" text-gray-700 text-lg font-semibold">
           Request Book List
+        </p>
+        <p className="text-gray-700 text-lg font-semibold">
+          <div className="flex item-center">
+            <div className="text-orange-500 ">
+              <FmdGoodIcon />
+            </div>
+            {books?.[0]?.bookInfo?.libraryName}
+          </div>
         </p>
       </div>
       <div className="flex w-full px-8 pt-8 pb-4 font-medium text-base">

@@ -20,4 +20,14 @@ export const requestApi = {
       `/borrow-book-instance/list?borrow_request_id=${borrowId}&user_id=${id}`
     );
   },
+
+  SentBorrowRequest(
+    borrowId: number,
+    borrowDate: string,
+    borrowDueDate: string
+  ) {
+    return axiosClient.post(
+      `/borrow-request/sent/${borrowId}?borrow_date=${borrowDate}&request_due_date=${borrowDueDate}`
+    );
+  },
 };

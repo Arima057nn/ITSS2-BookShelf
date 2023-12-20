@@ -10,6 +10,9 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import Link from "next/link";
 import Image from "next/image";
+import { requestApi } from "@/app/services";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute" as "absolute",
@@ -26,11 +29,12 @@ const style = {
 const Requestitem: React.FC<{
   request: BorrowRequestInterface;
 }> = ({ request }) => {
+  const router = useRouter();
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const currentDate = dayjs();
-  const formatDate = (dateString) => {
+  const formatDate = (dateString: any) => {
     const date = new Date(dateString);
 
     const year = date.getFullYear();
@@ -39,6 +43,29 @@ const Requestitem: React.FC<{
 
     return `${year}-${month}-${day}`;
   };
+
+  const [borrowDueDate, setBorrowDueDate] = React.useState<any>();
+
+  const handleDateChange = (date: any) => {
+    setBorrowDueDate(date);
+    console.log("date", formatDate(date));
+  };
+
+  const handleSentBorrowRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await requestApi.SentBorrowRequest(
+        request.id,
+        formatDate(currentDate),
+        formatDate(borrowDueDate)
+      );
+      console.log(res);
+      toast.success(res.data);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   return (
     <div className="flex px-8 mb-4 text-gray-700">
       <Modal
@@ -68,11 +95,17 @@ const Requestitem: React.FC<{
                 <DemoContainer
                   components={["DatePicker", "DatePicker", "DatePicker"]}
                 >
-                  <DatePicker label={"Request Due Date"} />
+                  <DatePicker
+                    onChange={handleDateChange}
+                    label={"Request Due Date"}
+                  />
                 </DemoContainer>
               </LocalizationProvider>
             </div>
-            <div className="bg-orange-500 text-sm py-2 px-8 rounded-md text-white cursor-pointer mt-8">
+            <div
+              onClick={(e) => handleSentBorrowRequest(e)}
+              className="bg-orange-500 text-sm py-2 px-8 rounded-md text-white cursor-pointer mt-8"
+            >
               BORROW
             </div>
           </div>
