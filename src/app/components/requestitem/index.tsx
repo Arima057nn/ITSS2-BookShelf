@@ -8,6 +8,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
+import Link from "next/link";
+import Image from "next/image";
 
 const style = {
   position: "absolute" as "absolute",
@@ -28,6 +30,15 @@ const Requestitem: React.FC<{
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const currentDate = dayjs();
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Thêm '0' trước nếu cần
+    const day = date.getDate().toString().padStart(2, "0"); // Thêm '0' trước nếu cần
+
+    return `${year}-${month}-${day}`;
+  };
   return (
     <div className="flex px-8 mb-4 text-gray-700">
       <Modal
@@ -67,11 +78,35 @@ const Requestitem: React.FC<{
           </div>
         </Box>
       </Modal>
-      <div className="flex w-10/12 p-8 text-base bg-white rounded-md">
-        <div className="w-5/12">{request.libraryName}</div>
-        <div className="w-2/12 text-center">{request.bookNumber}</div>
-        <div className="w-2/12 text-center">{request.borrowDate}</div>
-        <div className="w-2/12 text-center">{request.requestDueDate}</div>
+      <div className="flex w-10/12 p-4 text-base bg-white rounded-md">
+        <div className="w-5/12">
+          <div className="flex items-center">
+            <Image
+              src="/assets/images/library.png"
+              width={56}
+              height={56}
+              alt="Image of the author"
+            />
+            <div className="ml-4">
+              <Link href={`/request/${request.id}`}>
+                <div>{request.libraryName}</div>
+              </Link>
+            </div>
+          </div>
+        </div>
+        <div className="w-2/12 text-center flex justify-center flex-col">
+          {request.bookNumber}
+        </div>
+        <div className="w-2/12 text-center flex justify-center flex-col">
+          {request.borrowDate !== null && (
+            <span>{formatDate(request.borrowDate)}</span>
+          )}
+        </div>
+        <div className="w-2/12 text-center flex justify-center flex-col">
+          {request.borrowDate !== null && (
+            <span>{formatDate(request.requestDueDate)}</span>
+          )}
+        </div>
       </div>
       <div className="flex w-2/12 flex justify-center items-center">
         {request.status === "UNSENT" ? (

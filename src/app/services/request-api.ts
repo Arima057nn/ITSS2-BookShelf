@@ -15,4 +15,9 @@ export const requestApi = {
       `/borrow-book-instance/create?userId=${id}&bookId=${bookId}&libraryId=${libraryId}`
     );
   },
+  getBookFromRequest(id: number, borrowId: number) {
+    return axiosClient.get(
+      `/borrow-book-instance/list?borrow_request_id=${borrowId}&user_id=${id}`
+    );
+  },
 };

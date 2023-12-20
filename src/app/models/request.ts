@@ -10,3 +10,21 @@ export interface BorrowRequestInterface {
   status: string;
   id: number;
 }
+
+export interface BorrowBookInterface {
+  parentCategoryName: string | null;
+  bookInfo: {
+    borrowBookInstanceId: number;
+    pushlisher: string;
+    image: string;
+    categoryId: number;
+    categoryName: string;
+    borrowRequestId: number;
+    requestDate: Date;
+    libraryId: number;
+    libraryName: string;
+    parentCategoryId: number;
+    title: string;
+    id: number;
+  };
+}
