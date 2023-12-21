@@ -34,4 +34,8 @@ export const requestApi = {
   GetBorrowingBooks(id: number) {
     return axiosClient.get(`/borrow-book-instance/list/${id}`);
   },
+
+  DeleteRequest(id: number) {
+    return axiosClient.delete(`/borrow-request/delete/${id}`);
+  },
 };

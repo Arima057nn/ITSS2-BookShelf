@@ -2,7 +2,7 @@
 
 import { BorrowRequestInterface } from "@/app/models/request";
 import { Box, Modal } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -30,6 +30,7 @@ const Requestitem: React.FC<{
   request: BorrowRequestInterface;
 }> = ({ request }) => {
   const router = useRouter();
+  const [isDeleted, setIsDeleted] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -60,14 +61,23 @@ const Requestitem: React.FC<{
         formatDate(borrowDueDate)
       );
       console.log(res);
+      handleClose();
       toast.success(res.data);
     } catch (error) {
       toast.error(error);
     }
   };
 
+  const handleDeleteRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const res = await requestApi.DeleteRequest(request.id);
+    console.log(res);
+    setIsDeleted(true);
+    toast.success("Delete Successfully");
+  };
   return (
-    <div className="flex px-8 mb-4 text-gray-700">
+    <div>
       <Modal
         open={open}
         onClose={handleClose}
@@ -111,50 +121,57 @@ const Requestitem: React.FC<{
           </div>
         </Box>
       </Modal>
-      <div className="flex w-10/12 p-4 text-base bg-white rounded-md">
-        <div className="w-5/12">
-          <div className="flex items-center">
-            <Image
-              src="/assets/images/library.png"
-              width={56}
-              height={56}
-              alt="Image of the author"
-            />
-            <div className="ml-4">
-              <Link href={`/request/${request.id}`}>
-                <div>{request.libraryName}</div>
-              </Link>
+      {!isDeleted && (
+        <div className="flex px-8 mb-4 text-gray-700">
+          <div className="flex w-10/12 p-4 text-base bg-white rounded-md">
+            <div className="w-5/12">
+              <div className="flex items-center">
+                <Image
+                  src="/assets/images/library.png"
+                  width={56}
+                  height={56}
+                  alt="Image of the author"
+                />
+                <div className="ml-4">
+                  <Link href={`/request/${request.id}`}>
+                    <div>{request.libraryName}</div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="w-2/12 text-center flex justify-center flex-col">
+              {request.bookNumber}
+            </div>
+            <div className="w-2/12 text-center flex justify-center flex-col">
+              {request.borrowDate !== null && (
+                <span>{formatDate(request.borrowDate)}</span>
+              )}
+            </div>
+            <div className="w-2/12 text-center flex justify-center flex-col">
+              {request.borrowDate !== null && (
+                <span>{formatDate(request.requestDueDate)}</span>
+              )}
             </div>
           </div>
-        </div>
-        <div className="w-2/12 text-center flex justify-center flex-col">
-          {request.bookNumber}
-        </div>
-        <div className="w-2/12 text-center flex justify-center flex-col">
-          {request.borrowDate !== null && (
-            <span>{formatDate(request.borrowDate)}</span>
-          )}
-        </div>
-        <div className="w-2/12 text-center flex justify-center flex-col">
-          {request.borrowDate !== null && (
-            <span>{formatDate(request.requestDueDate)}</span>
-          )}
-        </div>
-      </div>
-      <div className="flex w-2/12 flex justify-center items-center">
-        {request.status === "UNSENT" ? (
-          <div
-            onClick={handleOpen}
-            className="bg-teal-600 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
-          >
-            Borrow
+          <div className="flex w-2/12 flex justify-center items-center">
+            {request.status === "UNSENT" ? (
+              <div
+                onClick={handleOpen}
+                className="bg-teal-600 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
+              >
+                Borrow
+              </div>
+            ) : (
+              <div
+                onClick={(e) => handleDeleteRequest(e)}
+                className="bg-orange-500 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
+              >
+                Cancel
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="bg-orange-500 text-sm py-2 px-4 rounded-md text-white">
-            Cancel
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
