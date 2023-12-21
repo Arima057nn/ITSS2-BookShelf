@@ -12,7 +12,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   function (error) {
-    return error;
+    return error.response;
   }
 );
 

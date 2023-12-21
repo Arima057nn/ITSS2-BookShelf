@@ -54,18 +54,18 @@ const Requestitem: React.FC<{
 
   const handleSentBorrowRequest = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await requestApi.SentBorrowRequest(
-        request.id,
-        formatDate(currentDate),
-        formatDate(borrowDueDate)
-      );
-      console.log(res);
-      handleClose();
+    const res = await requestApi.SentBorrowRequest(
+      request.id,
+      formatDate(currentDate),
+      formatDate(borrowDueDate)
+    );
+    console.log("res", res);
+    if (res.status === 400) {
+      toast.error(res.data);
+    } else if (res.status === 200) {
       toast.success(res.data);
-    } catch (error) {
-      toast.error(error);
     }
+    handleClose();
   };
 
   const handleDeleteRequest = async (e: React.FormEvent) => {
