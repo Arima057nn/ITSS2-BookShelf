@@ -13,6 +13,7 @@ import Image from "next/image";
 import { requestApi } from "@/app/services";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 
 const style = {
   position: "absolute" as "absolute",
@@ -32,8 +33,11 @@ const Requestitem: React.FC<{
   const router = useRouter();
   const [isDeleted, setIsDeleted] = useState(false);
   const [open, setOpen] = React.useState(false);
+  const [openQr, setOpenQr] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleOpenQr = () => setOpenQr(true);
+  const handleCloseQr = () => setOpenQr(false);
   const currentDate = dayjs();
   const formatDate = (dateString: any) => {
     const date = new Date(dateString);
@@ -121,6 +125,36 @@ const Requestitem: React.FC<{
           </div>
         </Box>
       </Modal>
+
+      <Modal
+        open={openQr}
+        onClose={handleCloseQr}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div className="flex w-full justify-center items-center flex-col my-6">
+            <p className="font-semibold text-xl mb-4">Borrow Code</p>
+            <Image
+              src="/assets/images/qr.png"
+              width={88}
+              height={88}
+              alt="Picture of the author"
+            />
+            <p className="font-medium text-xs py-4">Your rental code</p>
+            <p className="my-2 text-xl font-bold">{request.code}</p>
+            <p className="text-sm text-green-700 py-2">
+              Hand this code to the librarian to borrow books
+            </p>
+            <div
+              onClick={() => handleCloseQr()}
+              className="bg-orange-500 text-sm py-2 px-10 mt-32 rounded-md text-white cursor-pointer mt-8"
+            >
+              Close
+            </div>
+          </div>
+        </Box>
+      </Modal>
       {!isDeleted && (
         <div className="flex px-8 mb-4 text-gray-700">
           <div className="flex w-10/12 p-4 text-base bg-white rounded-md">
@@ -162,11 +196,19 @@ const Requestitem: React.FC<{
                 Borrow
               </div>
             ) : (
-              <div
-                onClick={(e) => handleDeleteRequest(e)}
-                className="bg-orange-500 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
-              >
-                Cancel
+              <div className="flex item-center justify-center">
+                <div
+                  onClick={handleOpenQr}
+                  className="flex item-center mr-4 cursor-pointer"
+                >
+                  <QrCodeScannerIcon sx={{ fontSize: 40 }} />
+                </div>
+                <div
+                  onClick={(e) => handleDeleteRequest(e)}
+                  className="bg-orange-500 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
+                >
+                  Cancel
+                </div>
               </div>
             )}
           </div>
