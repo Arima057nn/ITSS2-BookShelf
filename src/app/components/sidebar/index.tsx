@@ -28,10 +28,12 @@ const Sidebar = () => {
             <span className="ml-2">Request List</span>
           </div>
         </Link>
-        <div className="flex items-center pt-4">
-          <SearchIcon />
-          <span className="ml-2">Borrowed List</span>
-        </div>
+        <Link href="/borrowed">
+          <div className="flex items-center pt-4">
+            <SearchIcon />
+            <span className="ml-2">Borrowed List</span>
+          </div>
+        </Link>
       </div>
     </div>
   );
