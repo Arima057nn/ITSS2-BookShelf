@@ -26,7 +26,17 @@ const Bookitem: React.FC<{
             </div>
           </div>
         </div>
-        <div className="w-3/12 flex justify-center flex-col items-center"></div>
+        <div className="w-3/12 flex justify-center flex-col items-center">
+          {book.totalQuantity > 0 ? (
+            <div className="bg-green-500 py-1 px-2 rounded text-white text-sm">
+              Avaliable
+            </div>
+          ) : (
+            <div className="bg-red-600 py-1 px-2 rounded text-white text-sm">
+              Unable
+            </div>
+          )}
+        </div>
         <div className="w-3/12 flex justify-center flex-col">
           <p className="text-base">{book.book.category.name}</p>
           {book.book.category.parent_category_name !== null && (

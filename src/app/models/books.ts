@@ -40,4 +40,5 @@ export interface BooksInterface {
   };
   authors: Author[];
   librarys: LibraryInterface[];
+  totalQuantity: number;
 }
