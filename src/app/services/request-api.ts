@@ -38,4 +38,7 @@ export const requestApi = {
   DeleteRequest(id: number) {
     return axiosClient.delete(`/borrow-request/delete/${id}`);
   },
+  DeleteBook(id: number) {
+    return axiosClient.delete(`/borrow-book-instance/delete/${id}`);
+  },
 };
