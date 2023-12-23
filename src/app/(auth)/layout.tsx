@@ -16,7 +16,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="bg-[url('/assets/images/bg.png')] h-screen bg-cover">
+          <div className="flex w-full h-full justify-center items-center">
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }
