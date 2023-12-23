@@ -10,7 +10,6 @@ import { useSearchParams } from "next/navigation";
 
 export default function Home() {
   const [books, setBooks] = useState<any>([]);
-
   const searchParams = useSearchParams();
 
   useEffect(() => {
