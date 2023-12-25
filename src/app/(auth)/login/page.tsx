@@ -59,6 +59,7 @@ export default function Login() {
         height={110}
         alt="Picture of the author"
         className="py-6"
+        priority
       />
       <p className="pt-4">Welcome Back !</p>
       <p className="text-xs text-gray-400 py-2">

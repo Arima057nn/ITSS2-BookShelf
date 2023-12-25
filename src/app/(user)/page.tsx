@@ -66,7 +66,7 @@ export default function Home() {
         <div className="w-3/12">Category</div>
       </div>
       {books?.map((book: BooksInterface) => (
-        <Bookitem book={book} />
+        <Bookitem key={book.book.id} book={book} />
       ))}
     </div>
   );

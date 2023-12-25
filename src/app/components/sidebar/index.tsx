@@ -13,6 +13,7 @@ const Sidebar = () => {
         height={100}
         alt="Picture of the author"
         className="py-8"
+        priority
       />
 
       <div className="flex flex-col text-zinc-400">
