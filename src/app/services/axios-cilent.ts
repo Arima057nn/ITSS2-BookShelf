@@ -18,8 +18,8 @@ axiosClient.interceptors.response.use(
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const user = JSON.parse((localStorage as any).getItem("user"));
-    const token = user.accessToken;
+    const user = JSON.parse((localStorage as any).getItem("user") || {});
+    const token = user?.accessToken;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
