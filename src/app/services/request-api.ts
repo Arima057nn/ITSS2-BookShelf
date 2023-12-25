@@ -41,4 +41,8 @@ export const requestApi = {
   DeleteBook(id: number) {
     return axiosClient.delete(`/borrow-book-instance/delete/${id}`);
   },
+
+  AcceptRequest(code: string) {
+    return axiosClient.post(`/borrow-request/validate?code=${code}`);
+  },
 };

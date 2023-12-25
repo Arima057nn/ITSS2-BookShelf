@@ -1,12 +1,30 @@
 "use client";
 
 import withAdminAuth from "@/app/components/withAdminAuth";
+import { requestApi } from "@/app/services";
 import { TextField } from "@mui/material";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Borrow() {
   const [code, setCode] = useState("");
+
+  const handleAcceptRequest = async (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
+    event.preventDefault();
+
+    try {
+      const res = await requestApi.AcceptRequest(code);
+
+      toast.success(res.data);
+    } catch (e) {
+      const error = e as AxiosError;
+      toast.error(error.message);
+    }
+  };
   return (
     <div className="bg-white flex flex-col py-8 px-12 rounded-lg items-center justify-center text-gray-700 shadow-2xl">
       <Image
@@ -18,12 +36,15 @@ function Borrow() {
         priority
       />
       <p className="text-sm text-gray-600 py-4">Input the request code</p>
-      <form className="flex flex-col justify-start w-80">
+      <form
+        onSubmit={handleAcceptRequest}
+        className="flex flex-col justify-start w-80"
+      >
         <p className="text-sm font-semibold my-6">Request code</p>
         <TextField
           maxRows={4}
           required
-          type="text"
+          type="password"
           value={code}
           size="small"
           onChange={(e) => setCode(e.target.value)}
