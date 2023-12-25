@@ -16,9 +16,11 @@ export const UserContext = createContext<UserContextProps>(INITIAL_STATE);
 const UserReducer = (state: any, action: any) => {
   switch (action.type) {
     case "LOGIN_SUCCESS": {
+      toast.success("Login successfully !");
       return { user: action.payload };
     }
     case "LOGOUT": {
+      toast.success("Logout successfully !");
       return { user: null };
     }
     default:

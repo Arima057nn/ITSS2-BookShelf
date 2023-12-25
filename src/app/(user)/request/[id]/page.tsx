@@ -1,22 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { requestApi } from "@/app/services";
 import Action from "@/app/components/action";
 import { BorrowBookInterface } from "@/app/models/request";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import BookListitem from "@/app/components/booklistitem";
+import withUserAuth from "@/app/components/withUserAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 
-export default function Page({ params }: { params: { id: number } }) {
+function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const [books, setBooks] = useState<BorrowBookInterface[]>();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getBooks();
   }, []);
 
   const getBooks = async () => {
-    let res = await requestApi.getBookFromRequest(1, id);
+    let res = await requestApi.getBookFromRequest(user.userId, id);
     setBooks(res.data);
   };
   return (
@@ -49,3 +52,5 @@ export default function Page({ params }: { params: { id: number } }) {
     </div>
   );
 }
+
+export default withUserAuth(Page);

@@ -10,19 +10,22 @@ import {
   OutlinedInput,
   TextField,
 } from "@mui/material";
-import axios, { AxiosError } from "axios";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { UserContext } from "@/app/contexts/UserContext";
+import { useRouter } from "next/navigation";
+import { authApi } from "@/app/services/auth-api";
 
 export default function Login() {
   const [account, setAccount] = useState<LoginPayload>();
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-  const { dispatch } = useContext(UserContext);
+  const { user, dispatch } = useContext(UserContext);
+  const router = useRouter();
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -30,16 +33,22 @@ export default function Login() {
     event.preventDefault();
   };
 
+  useEffect(() => {
+    if (user && user.accessToken) {
+      router.back();
+    }
+  }, []);
+
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const { data } = await axios.post("api/auth/login", account);
-
-      dispatch && dispatch({ type: "LOGIN_SUCCESS", payload: data });
-      toast.success("Login successfully !");
+      // const res = await axios.post("api/auth/login", account);
+      const res = await authApi.login(account);
+      console.log("auth:", res.data);
+      dispatch && dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+      router.push(`/`);
     } catch (e) {
       const error = e as AxiosError;
-
       toast.error(error.message);
     }
   };
@@ -62,6 +71,7 @@ export default function Login() {
           <TextField
             maxRows={4}
             required
+            type="email"
             value={account?.email}
             onChange={(e) =>
               setAccount({

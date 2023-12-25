@@ -4,8 +4,9 @@ import Action from "@/app/components/action";
 import { requestApi } from "@/app/services/request-api";
 import Borroweditem from "@/app/components/borroweditem";
 import { BorrowingBookInterface } from "@/app/models/borrowed";
+import withUserAuth from "@/app/components/withUserAuth";
 
-export default function Borrowed() {
+function Borrowed() {
   const [books, setBooks] = useState<BorrowingBookInterface[]>();
   useEffect(() => {
     getBooks();
@@ -49,3 +50,5 @@ export default function Borrowed() {
     </div>
   );
 }
+
+export default withUserAuth(Borrowed);

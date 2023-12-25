@@ -1,19 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Action from "@/app/components/action";
 import Requestitem from "@/app/components/requestitem";
 import { requestApi } from "@/app/services/request-api";
 import { BorrowRequestInterface } from "@/app/models/request";
+import withUserAuth from "@/app/components/withUserAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 
-export default function Request() {
+function Request() {
   const [requests, setRequests] = useState<any>([]);
+  const { user } = useContext(UserContext);
+
   useEffect(() => {
     getRequests();
   }, []);
 
   const getRequests = async () => {
-    let res = await requestApi.getRequestByUser(1);
-    setRequests(res.data);
+    let res = await requestApi.getRequestByUser(user.userId);
+    console.log("res", res);
+    // setRequests(res.data);
   };
   return (
     <div>
@@ -39,3 +44,4 @@ export default function Request() {
     </div>
   );
 }
+export default withUserAuth(Request);

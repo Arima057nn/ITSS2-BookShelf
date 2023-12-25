@@ -7,7 +7,7 @@ export const bookApi = {
     return axiosClient.get(`/book/list`);
   },
   getBook(id: number): Promise<AxiosResponse<BookDetailInterface>> {
-    return axiosClient.get(`/book/${id}`);
+    return axiosClient.get(`/book/get-by-id/${id}`);
   },
   searchBook(
     title: string | null,
