@@ -1,3 +1,5 @@
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+
 export interface Author {
   id: number;
   name: string;
@@ -45,7 +47,7 @@ export interface BookDetailInterface {
     title: string;
     description: string;
     quantity: number;
-    cover_image_url: string;
+    cover_image_url: string | StaticImport;
     category: {
       id: number;
       name: string;

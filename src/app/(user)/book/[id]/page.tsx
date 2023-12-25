@@ -16,7 +16,7 @@ import Action from "@/app/components/action";
 export default function Page({ params }: { params: { id: number } }) {
   const { id } = params;
   const [book, setBook] = useState<BookDetailInterface>();
-  const [selectedLibrary, setSelectedLibrary] = useState("");
+  const [selectedLibrary, setSelectedLibrary] = useState<string | number>();
   const { user } = useContext(UserContext);
   const router = useRouter();
 
@@ -32,7 +32,11 @@ export default function Page({ params }: { params: { id: number } }) {
   const handleAddBook = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const res = await requestApi.AddBookToBorrow(1, id, selectedLibrary);
+      const res = await requestApi.AddBookToBorrow(
+        user.userId,
+        id,
+        selectedLibrary
+      );
       toast.success(res.data);
     } catch (error) {
       console.error("Error adding book to borrow:", error);

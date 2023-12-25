@@ -9,7 +9,7 @@ export const requestApi = {
   AddBookToBorrow(
     id: number,
     bookId: number | string,
-    libraryId: number | string
+    libraryId: number | string | undefined
   ) {
     return axiosClient.post(
       `/borrow-book-instance/create?userId=${id}&bookId=${bookId}&libraryId=${libraryId}`

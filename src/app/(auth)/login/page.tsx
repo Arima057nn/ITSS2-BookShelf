@@ -42,7 +42,6 @@ export default function Login() {
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      // const res = await axios.post("api/auth/login", account);
       const res = await authApi.login(account);
       console.log("auth:", res.data);
       dispatch && dispatch({ type: "LOGIN_SUCCESS", payload: res.data });

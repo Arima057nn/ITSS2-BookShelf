@@ -18,7 +18,7 @@ function Request() {
   const getRequests = async () => {
     let res = await requestApi.getRequestByUser(user.userId);
     console.log("res", res);
-    // setRequests(res.data);
+    setRequests(res?.data);
   };
   return (
     <div>

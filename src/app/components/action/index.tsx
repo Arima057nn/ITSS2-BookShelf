@@ -40,7 +40,7 @@ const Action = () => {
               },
             }}
           >
-            {user && <Avatar alt="Remy Sharp" src="assets/images/avatar.png" />}
+            {user && <Avatar src="assets/images/avatar.png" />}
             <div
               className={`${
                 !user ? "flex items-center h-10" : ""
