@@ -140,6 +140,7 @@ const Requestitem: React.FC<{
               width={88}
               height={88}
               alt="Picture of the author"
+              priority
             />
             <p className="font-medium text-xs py-4">Your rental code</p>
             <p className="my-2 text-xl font-bold">{request.code}</p>
@@ -165,6 +166,7 @@ const Requestitem: React.FC<{
                   width={56}
                   height={56}
                   alt="Image of the author"
+                  priority
                 />
                 <div className="ml-4">
                   <Link href={`/request/${request.id}`}>

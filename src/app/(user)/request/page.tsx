@@ -17,7 +17,6 @@ function Request() {
 
   const getRequests = async () => {
     let res = await requestApi.getRequestByUser(user.userId);
-    console.log("res", res);
     setRequests(res?.data);
   };
   return (
@@ -38,7 +37,7 @@ function Request() {
 
       <div>
         {requests?.map((item: BorrowRequestInterface) => (
-          <Requestitem request={item} />
+          <Requestitem key={item.id} request={item} />
         ))}
       </div>
     </div>

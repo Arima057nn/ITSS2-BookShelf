@@ -57,6 +57,7 @@ export default function Page({ params }: { params: { id: number } }) {
               width={268}
               height={268}
               alt="Picture of the author"
+              priority
             />
           </div>
         </div>
@@ -123,6 +124,7 @@ export default function Page({ params }: { params: { id: number } }) {
                     width={88}
                     height={88}
                     alt="Picture of the author"
+                    priority
                   />
                 </div>
               </div>
@@ -141,6 +143,7 @@ export default function Page({ params }: { params: { id: number } }) {
                       width={75}
                       height={75}
                       alt="Picture of the author"
+                      priority
                     />
                   );
                 })}

@@ -1,19 +1,22 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Action from "@/app/components/action";
 import { requestApi } from "@/app/services/request-api";
 import Borroweditem from "@/app/components/borroweditem";
 import { BorrowingBookInterface } from "@/app/models/borrowed";
 import withUserAuth from "@/app/components/withUserAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 
 function Borrowed() {
+  const { user } = useContext(UserContext);
+
   const [books, setBooks] = useState<BorrowingBookInterface[]>();
   useEffect(() => {
     getBooks();
   }, []);
 
   const getBooks = async () => {
-    let res = await requestApi.GetBorrowingBooks(1);
+    let res = await requestApi.GetBorrowingBooks(user.userId);
     setBooks(res.data);
   };
 

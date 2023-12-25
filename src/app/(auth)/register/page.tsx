@@ -37,6 +37,7 @@ export default function Register() {
         height={110}
         alt="Picture of the author"
         className="py-4"
+        priority
       />
       <p className="py-4">Registration</p>
 

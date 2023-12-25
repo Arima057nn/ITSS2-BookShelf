@@ -16,6 +16,7 @@ const Bookitem: React.FC<{
             width={56}
             height={56}
             alt="Image of the author"
+            priority
           />
           <div className="ml-8 flex flex-col justify-center">
             <Link href={`/book/${book.book.id}`}>
