@@ -159,7 +159,7 @@ const Requestitem: React.FC<{
       {!isDeleted && (
         <div className="flex px-8 mb-4 text-gray-700">
           <div className="flex w-10/12 p-4 text-base bg-white rounded-md">
-            <div className="w-5/12">
+            <div className="w-4/12">
               <div className="flex items-center">
                 <Image
                   src="/assets/images/library.png"
@@ -188,6 +188,9 @@ const Requestitem: React.FC<{
                 <span>{formatDate(request.requestDueDate)}</span>
               )}
             </div>
+            <div className="w-2/12 text-center flex items-center justify-center flex-col">
+              {request.status}
+            </div>
           </div>
           <div className="flex w-2/12 flex justify-center items-center">
             {request.status === "UNSENT" ? (
@@ -205,12 +208,14 @@ const Requestitem: React.FC<{
                 >
                   <QrCodeScannerIcon sx={{ fontSize: 40 }} />
                 </div>
-                <div
-                  onClick={(e) => handleDeleteRequest(e)}
-                  className="bg-orange-500 text-sm py-2 px-4 rounded-md text-white cursor-pointer"
-                >
-                  Cancel
-                </div>
+                {request.status !== "BORROWING" && (
+                  <div
+                    onClick={(e) => handleDeleteRequest(e)}
+                    className="bg-orange-500 text-sm px-2 flex justify-center items-center rounded-md text-white cursor-pointer"
+                  >
+                    Cancel
+                  </div>
+                )}
               </div>
             )}
           </div>

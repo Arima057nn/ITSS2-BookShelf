@@ -29,10 +29,11 @@ function Request() {
         <p className=" text-gray-700 text-lg font-semibold">Request list</p>
       </div>
       <div className="flex w-10/12 px-8 pt-8 pb-4 font-medium text-base">
-        <div className="w-5/12">Title</div>
+        <div className="w-4/12">Title</div>
         <div className="w-2/12 text-center">Book Number</div>
         <div className="w-2/12 text-center">Borrow Date</div>
         <div className="w-2/12 text-center">Request Due Date</div>
+        <div className="w-2/12 text-center">Status</div>
       </div>
 
       <div>
