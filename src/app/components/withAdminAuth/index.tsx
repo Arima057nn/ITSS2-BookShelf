@@ -1,6 +1,6 @@
-"use client";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ComponentType, ReactNode, useContext } from "react";
+import { ComponentType, useContext } from "react";
 import { UserContext } from "../../contexts/UserContext";
 
 const withAdminAuth = (WrappedComponent: ComponentType<any>) => {
@@ -8,13 +8,17 @@ const withAdminAuth = (WrappedComponent: ComponentType<any>) => {
     const router = useRouter();
     const { user } = useContext(UserContext);
 
-    if (!user) {
-      router.push("/login");
-      return null;
-    } else if (user && user.role !== "LIBRARIAN") {
-      router.back();
-      return null;
-    }
+    useEffect(() => {
+      // Check if we are on the client side before using router
+      if (typeof window !== "undefined") {
+        if (!user) {
+          router.push("/login");
+        } else if (user && user.role !== "LIBRARIAN") {
+          router.back();
+        }
+      }
+    }, [user, router]);
+
     return <WrappedComponent {...props} />;
   };
 

@@ -23,7 +23,7 @@ function Return() {
         <TextField
           maxRows={4}
           required
-          type="text"
+          type="password"
           value={code}
           size="small"
           onChange={(e) => setCode(e.target.value)}
