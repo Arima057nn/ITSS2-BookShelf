@@ -11,7 +11,7 @@ const withAdminAuth = (WrappedComponent: ComponentType<any>) => {
     if (!user) {
       router.push("/login");
       return null;
-    } else if (user && user.role !== "ADMIN") {
+    } else if (user && user.role !== "LIBRARIAN") {
       router.back();
       return null;
     }

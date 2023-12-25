@@ -43,9 +43,13 @@ export default function Login() {
     event.preventDefault();
     try {
       const res = await authApi.login(account);
-      console.log("auth:", res.data);
-      dispatch && dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      router.push(`/`);
+      if (res.status === 403) {
+        dispatch && dispatch({ type: "LOGIN_FAILURE" });
+      } else {
+        dispatch && dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+        if (res.data.role === "USER") router.push(`/`);
+        else router.push(`/admin`);
+      }
     } catch (e) {
       const error = e as AxiosError;
       toast.error(error.message);
