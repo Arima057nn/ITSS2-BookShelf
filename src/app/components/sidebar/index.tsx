@@ -3,8 +3,12 @@
 import Image from "next/image";
 import SearchIcon from "@mui/icons-material/Search";
 import Link from "next/link";
+import { useContext } from "react";
+import { UserContext } from "@/app/contexts/UserContext";
 
 const Sidebar = () => {
+  const { user } = useContext(UserContext);
+
   return (
     <div className="flex flex-col">
       <Image
@@ -17,24 +21,42 @@ const Sidebar = () => {
       />
 
       <div className="flex flex-col text-zinc-400">
-        <Link href="/">
+        <Link href={user?.role === "LIBRARIAN" ? "/admin" : "/"}>
           <div className="flex items-center pt-4">
             <SearchIcon />
             <span className="ml-2">Search</span>
           </div>
         </Link>
-        <Link href="/request">
+        <Link href={user?.role === "LIBRARIAN" ? "/admin/request" : "/request"}>
           <div className="flex items-center pt-4">
             <SearchIcon />
             <span className="ml-2">Request List</span>
           </div>
         </Link>
-        <Link href="/borrowed">
-          <div className="flex items-center pt-4">
-            <SearchIcon />
-            <span className="ml-2">Borrowed List</span>
+        {user?.role !== "LIBRARIAN" && (
+          <Link href="/borrowed">
+            <div className="flex items-center pt-4">
+              <SearchIcon />
+              <span className="ml-2">Borrowed List</span>
+            </div>
+          </Link>
+        )}
+        {user?.role === "LIBRARIAN" && (
+          <div>
+            <Link href="/admin/borrow">
+              <div className="flex items-center pt-4">
+                <SearchIcon />
+                <span className="ml-2">Borrow Book</span>
+              </div>
+            </Link>
+            <Link href="/admin/return">
+              <div className="flex items-center pt-4">
+                <SearchIcon />
+                <span className="ml-2">Return Book</span>
+              </div>
+            </Link>
           </div>
-        </Link>
+        )}
       </div>
     </div>
   );
