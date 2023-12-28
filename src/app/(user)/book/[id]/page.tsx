@@ -10,7 +10,7 @@ import {
 } from "@/app/models/common";
 import { toast } from "react-toastify";
 import { UserContext } from "@/app/contexts/UserContext";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Action from "@/app/components/action";
 
 export default function Page({ params }: { params: { id: number } }) {
@@ -31,15 +31,22 @@ export default function Page({ params }: { params: { id: number } }) {
 
   const handleAddBook = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const res = await requestApi.AddBookToBorrow(
-        user.userId,
-        id,
-        selectedLibrary
-      );
-      toast.success(res.data);
-    } catch (error) {
-      console.error("Error adding book to borrow:", error);
+    if (user && user.role === "USER") {
+      try {
+        const res = await requestApi.AddBookToBorrow(
+          user.userId,
+          id,
+          selectedLibrary
+        );
+        toast.success(res.data);
+      } catch (error) {
+        console.error("Error adding book to borrow:", error);
+      }
+    } else {
+      toast.error("Please log in as user !");
+      if (!user) {
+        router.push("/login");
+      }
     }
   };
 
@@ -98,14 +105,12 @@ export default function Page({ params }: { params: { id: number } }) {
                     <br />
                   </div>
                 ))}
-                {user && user.role === "USER" && (
-                  <button
-                    onClick={(e) => handleAddBook(e)}
-                    className="rounded px-2 py-3 mt-4 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600"
-                  >
-                    Add to request list
-                  </button>
-                )}
+                <button
+                  onClick={(e) => handleAddBook(e)}
+                  className="rounded px-2 py-3 mt-4 w-52 text-lg font-semibold text-gray-100 bg-[#F27851] hover:bg-orange-600"
+                >
+                  Add to request list
+                </button>
               </form>
             </div>
             <div className="w-5/12 bg-white rounded-lg p-6 flex flex-col h-96">

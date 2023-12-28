@@ -30,7 +30,7 @@ function Request() {
         <div className="w-2/12 text-center">Status</div>
       </div>
 
-      {requests.map((item: BorrowerInterface) => (
+      {requests?.map((item: BorrowerInterface) => (
         <Borroweritem borrower={item} />
       ))}
     </div>

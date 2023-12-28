@@ -16,7 +16,7 @@ function Borrowed() {
   }, []);
 
   const getBooks = async () => {
-    let res = await requestApi.GetBorrowingBooks(user.userId);
+    let res = await requestApi.GetBorrowingBooks(user?.userId);
     setBooks(res.data);
   };
 
