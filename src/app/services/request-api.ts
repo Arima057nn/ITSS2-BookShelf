@@ -45,4 +45,7 @@ export const requestApi = {
   AcceptRequest(code: string) {
     return axiosClient.post(`/borrow-request/validate?code=${code}`);
   },
+  ReturnBook(code: string) {
+    return axiosClient.post(`/borrow-request/return?code=${code}`);
+  },
 };

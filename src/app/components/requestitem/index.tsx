@@ -208,7 +208,7 @@ const Requestitem: React.FC<{
                 >
                   <QrCodeScannerIcon sx={{ fontSize: 40 }} />
                 </div>
-                {request.status !== "BORROWING" && (
+                {(request.status === "UNSENT" || request.status === "REQUESTED") && (
                   <div
                     onClick={(e) => handleDeleteRequest(e)}
                     className="bg-orange-500 text-sm px-2 flex justify-center items-center rounded-md text-white cursor-pointer"

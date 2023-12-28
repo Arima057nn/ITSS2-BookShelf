@@ -18,8 +18,10 @@ function Borrow() {
 
     try {
       const res = await requestApi.AcceptRequest(code);
-
-      toast.success(res.data);
+      if(res?.status === 404){
+        toast.error(res.data);
+      }else
+        toast.success(res.data);
     } catch (e) {
       const error = e as AxiosError;
       toast.error(error.message);
