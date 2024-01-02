@@ -23,6 +23,10 @@ const UserReducer = (state: any, action: any) => {
       toast.success("Logout successfully !");
       return { user: null };
     }
+    case "LOGIN_FAILURE": {
+      toast.error("Login Failure !");
+      return { user: null };
+    }
     default:
       return state;
   }
