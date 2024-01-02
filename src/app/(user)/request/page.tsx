@@ -19,6 +19,27 @@ function Request() {
     let res = await requestApi.getRequestByUser(user?.userId);
     setRequests(res?.data);
   };
+
+  const updateRequestStatus = (
+    requestId: number,
+    newStatus: string,
+    newBorrowDate: string,
+    newRequestDueDate: string
+  ) => {
+    setRequests((prevRequests: any[]) =>
+      prevRequests.map((request: BorrowRequestInterface) =>
+        request.id === requestId
+          ? {
+              ...request,
+              status: newStatus,
+              borrowDate: newBorrowDate,
+              requestDueDate: newRequestDueDate,
+            }
+          : request
+      )
+    );
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">
@@ -38,7 +59,11 @@ function Request() {
 
       <div>
         {requests?.map((item: BorrowRequestInterface) => (
-          <Requestitem key={item.id} request={item} />
+          <Requestitem
+            key={item.id}
+            request={item}
+            updateRequestStatus={updateRequestStatus}
+          />
         ))}
       </div>
     </div>

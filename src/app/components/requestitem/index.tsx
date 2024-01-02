@@ -29,7 +29,13 @@ const style = {
 
 const Requestitem: React.FC<{
   request: BorrowRequestInterface;
-}> = ({ request }) => {
+  updateRequestStatus: (
+    requestId: number,
+    newStatus: string,
+    newBorrowDate: string,
+    newRequestDueDate: string
+  ) => void;
+}> = ({ request, updateRequestStatus }) => {
   const router = useRouter();
   const [isDeleted, setIsDeleted] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -68,6 +74,12 @@ const Requestitem: React.FC<{
       toast.error(res.data);
     } else if (res.status === 200) {
       toast.success(res.data);
+      updateRequestStatus(
+        request.id,
+        "REQUESTED",
+        formatDate(currentDate),
+        formatDate(borrowDueDate)
+      );
     }
     handleClose();
   };
@@ -208,7 +220,8 @@ const Requestitem: React.FC<{
                 >
                   <QrCodeScannerIcon sx={{ fontSize: 40 }} />
                 </div>
-                {(request.status === "UNSENT" || request.status === "REQUESTED") && (
+                {(request.status === "UNSENT" ||
+                  request.status === "REQUESTED") && (
                   <div
                     onClick={(e) => handleDeleteRequest(e)}
                     className="bg-orange-500 text-sm px-2 flex justify-center items-center rounded-md text-white cursor-pointer"
