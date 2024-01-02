@@ -33,7 +33,7 @@ function Request() {
       </div>
 
       {requests?.map((item: BorrowerInterface) => (
-        <Borroweritem borrower={item} />
+        <Borroweritem key={item.id} borrower={item} />
       ))}
     </div>
   );

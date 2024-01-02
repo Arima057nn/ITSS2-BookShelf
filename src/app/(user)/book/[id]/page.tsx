@@ -76,7 +76,7 @@ export default function Page({ params }: { params: { id: number } }) {
                 By{" "}
                 <span className="decoration-solid underline">
                   {book?.authors.map((item: Author) => (
-                    <span>{item.name}, </span>
+                    <span key={item.id}>{item.name}, </span>
                   ))}
                 </span>
                 {book?.book.publish_year}
@@ -141,9 +141,10 @@ export default function Page({ params }: { params: { id: number } }) {
                 Other Books
               </p>
               <div className="flex">
-                {book?.ortherBooks.map((item, index) => {
+                {book?.ortherBooks.map((item) => {
                   return (
                     <Image
+                      key={item.id}
                       src={item.cover_image_url}
                       width={75}
                       height={75}

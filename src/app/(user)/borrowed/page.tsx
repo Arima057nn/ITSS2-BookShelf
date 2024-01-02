@@ -46,8 +46,8 @@ function Borrowed() {
       </div>
 
       <div>
-        {books?.map((item: BorrowingBookInterface) => (
-          <Borroweditem book={item} />
+        {books?.map((item: BorrowingBookInterface, index: number) => (
+          <Borroweditem key={index} book={item} />
         ))}
       </div>
     </div>

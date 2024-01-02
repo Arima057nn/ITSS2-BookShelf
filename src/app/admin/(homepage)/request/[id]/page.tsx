@@ -30,8 +30,8 @@ function Page({ params }: { params: { id: number } }) {
         <div className="w-4/12 text-center">Category</div>
         <div className="w-2/12 text-center"></div>
       </div>
-      {books?.map((item: BorrowBookInterface) => (
-        <AdminBookListitem item={item} />
+      {books?.map((item: BorrowBookInterface, index: number) => (
+        <AdminBookListitem key={index} item={item} />
       ))}
     </div>
   );

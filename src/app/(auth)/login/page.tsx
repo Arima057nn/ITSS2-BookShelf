@@ -20,7 +20,10 @@ import { useRouter } from "next/navigation";
 import { authApi } from "@/app/services/auth-api";
 
 export default function Login() {
-  const [account, setAccount] = useState<LoginPayload>();
+  const [account, setAccount] = useState<LoginPayload>({
+    email: "",
+    password: "",
+  });
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
