@@ -40,45 +40,47 @@ const Action = () => {
               },
             }}
           >
-            {user && <Avatar src="assets/images/avatar.png" />}
-            <div
-              className={`${
-                !user ? "flex items-center h-10" : ""
-              } text-base mx-4 text-gray-700`}
-            >
-              {user ? (
-                user.username
-              ) : (
-                <Link href={`/login`}>
-                  <div className="font-semibold">Login</div>
-                </Link>
-              )}
-            </div>
-            {user && <ArrowDropDownIcon />}
+            <Avatar src="assets/images/avatar.png" />
+
+            <ArrowDropDownIcon />
           </IconButton>
         </Box>
-        {user && (
-          <Menu
-            sx={{ mt: "45px" }}
-            id="menu-appbar"
-            anchorEl={anchorElUser}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={Boolean(anchorElUser)}
-            onClose={handleCloseUserMenu}
-          >
+        <Menu
+          sx={{ mt: "45px" }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {user && (
+            <MenuItem disabled>
+              <Typography textAlign="center" fontSize={20}>
+                {user.username}
+              </Typography>
+            </MenuItem>
+          )}
+
+          {user ? (
             <MenuItem onClick={hanldeLogout}>
               <Typography textAlign="center">Logout</Typography>
             </MenuItem>
-          </Menu>
-        )}
+          ) : (
+            <Link href={`/login`}>
+              <MenuItem>
+                <Typography textAlign="center">Login</Typography>
+              </MenuItem>
+            </Link>
+          )}
+        </Menu>
       </Box>
     </div>
   );
