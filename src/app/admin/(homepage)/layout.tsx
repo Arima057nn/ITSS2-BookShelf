@@ -1,7 +1,6 @@
 import Action from "@/app/components/action";
 import Sidebar from "@/app/components/sidebar";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "BookShelf",

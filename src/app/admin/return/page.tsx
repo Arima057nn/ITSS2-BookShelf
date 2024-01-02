@@ -1,25 +1,26 @@
 "use client";
 
 import withAdminAuth from "@/app/components/withAdminAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 import { requestApi } from "@/app/services";
 import { TextField } from "@mui/material";
 import { AxiosError } from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 function Return() {
   const [code, setCode] = useState("");
+  const { user } = useContext(UserContext);
 
   const handleReturnBook = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
-      const res = await requestApi.ReturnBook(code);
-      if(res?.status === 404){
+      const res = await requestApi.ReturnBook(code, user?.libraryId);
+      if (res?.status === 404) {
         toast.error(res.data);
-      }else
-        toast.success(res.data);
+      } else toast.success(res.data);
     } catch (e) {
       const error = e as AxiosError;
       toast.error(error.message);

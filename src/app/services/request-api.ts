@@ -47,7 +47,9 @@ export const requestApi = {
       `/borrow-request/validate?code=${code}&library_id=${library_id}`
     );
   },
-  ReturnBook(code: string) {
-    return axiosClient.post(`/borrow-request/return?code=${code}`);
+  ReturnBook(code: string, library_id: number) {
+    return axiosClient.post(
+      `/borrow-request/return?code=${code}&library_id=${library_id}`
+    );
   },
 };

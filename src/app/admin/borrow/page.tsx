@@ -17,9 +17,6 @@ function Borrow() {
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
-
-    console.log("code", code);
-    console.log("libraryId", user?.libraryId);
     try {
       const res = await requestApi.AcceptRequest(code, user?.libraryId);
       if (res?.status === 404) {
