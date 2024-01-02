@@ -2,21 +2,23 @@
 
 import Borroweritem from "@/app/components/borroweritem";
 import withAdminAuth from "@/app/components/withAdminAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 import { BorrowerInterface } from "@/app/models/admin";
 import { adminApi } from "@/app/services";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 function Request() {
   const [requests, setRequests] = useState<any>([]);
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     getRequests();
   }, []);
 
   const getRequests = async () => {
-    let res = await adminApi.getAllRequests();
+    let res = await adminApi.getAllRequests(user?.libraryId);
     console.log("ress", res);
-    setRequests(res?.data);
+    setRequests(res?.data || []);
   };
   return (
     <div>

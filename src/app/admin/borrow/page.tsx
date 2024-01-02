@@ -1,27 +1,30 @@
 "use client";
 
 import withAdminAuth from "@/app/components/withAdminAuth";
+import { UserContext } from "@/app/contexts/UserContext";
 import { requestApi } from "@/app/services";
 import { TextField } from "@mui/material";
 import { AxiosError } from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 
 function Borrow() {
   const [code, setCode] = useState("");
+  const { user } = useContext(UserContext);
 
   const handleAcceptRequest = async (
     event: React.FormEvent<HTMLFormElement>
   ) => {
     event.preventDefault();
 
+    console.log("code", code);
+    console.log("libraryId", user?.libraryId);
     try {
-      const res = await requestApi.AcceptRequest(code);
-      if(res?.status === 404){
+      const res = await requestApi.AcceptRequest(code, user?.libraryId);
+      if (res?.status === 404) {
         toast.error(res.data);
-      }else
-        toast.success(res.data);
+      } else toast.success(res.data);
     } catch (e) {
       const error = e as AxiosError;
       toast.error(error.message);

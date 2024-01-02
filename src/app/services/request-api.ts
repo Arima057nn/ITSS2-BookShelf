@@ -42,8 +42,10 @@ export const requestApi = {
     return axiosClient.delete(`/borrow-book-instance/delete/${id}`);
   },
 
-  AcceptRequest(code: string) {
-    return axiosClient.post(`/borrow-request/validate?code=${code}`);
+  AcceptRequest(code: string, library_id: number) {
+    return axiosClient.post(
+      `/borrow-request/validate?code=${code}&library_id=${library_id}`
+    );
   },
   ReturnBook(code: string) {
     return axiosClient.post(`/borrow-request/return?code=${code}`);
