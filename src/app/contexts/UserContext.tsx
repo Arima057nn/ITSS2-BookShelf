@@ -7,9 +7,16 @@ interface UserContextProps {
   dispatch?: React.Dispatch<any>;
 }
 
-const INITIAL_STATE: UserContextProps = {
-  user: JSON.parse((localStorage as any).getItem("user")) || null,
+const getInitialUserState = () => {
+  // Check if localStorage is available (client-side)
+  if (typeof window !== "undefined" && localStorage) {
+    const storedUser = localStorage.getItem("user");
+    return { user: storedUser ? JSON.parse(storedUser) : null };
+  }
+  return { user: null };
 };
+
+const INITIAL_STATE: UserContextProps = getInitialUserState();
 
 export const UserContext = createContext<UserContextProps>(INITIAL_STATE);
 
