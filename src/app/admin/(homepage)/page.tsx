@@ -1,55 +1,23 @@
 "use client";
 
-import Bookitem from "@/app/components/bookitem";
+import Bookadminitem from "@/app/components/bookadminitem";
 import withAdminAuth from "@/app/components/withAdminAuth";
-import { BooksInterface } from "@/app/models/books";
-import { bookApi } from "@/app/services";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { UserContext } from "@/app/contexts/UserContext";
+import { BookListInterface } from "@/app/models/admin";
+import { adminApi } from "@/app/services";
+import { useContext, useEffect, useState } from "react";
 
 function Homepage() {
   const [books, setBooks] = useState<any>([]);
-  const searchParams = useSearchParams();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    if (searchParams.get("title") !== null) getBooks(searchParams.get("title"));
-    else if (searchParams.get("author") !== null)
-      getBooks(searchParams.get("author"));
-    else if (searchParams.get("publishingTime") !== null)
-      getBooks(searchParams.get("publishingTime"));
-    else if (searchParams.get("library") !== null)
-      getBooks(searchParams.get("library"));
-    else if (searchParams.get("categoryId") !== null)
-      getBooks(searchParams.get("categoryId"));
-    else {
-      getBooks(searchParams.get("title"));
-    }
-  }, [searchParams]);
+    getBooks();
+  }, []);
 
-  const getBooks = async (search: any) => {
-    console.log("search", search);
-    let res;
-    if (search === null) {
-      search = "";
-      res = await bookApi.searchBook(search, "", "", "", "");
-    } else {
-      if (searchParams.get("title") !== null) {
-        res = await bookApi.searchBook(search, "", "", "", "");
-      }
-      if (searchParams.get("author") !== null) {
-        res = await bookApi.searchBook("", search, "", "", "");
-      }
-      if (searchParams.get("publishingTime") !== null) {
-        res = await bookApi.searchBook("", "", search, "", "");
-      }
-      if (searchParams.get("library") !== null) {
-        res = await bookApi.searchBook("", "", "", search, "");
-      }
-      if (searchParams.get("categoryId") !== null) {
-        res = await bookApi.searchBook("", "", "", "", search);
-      }
-    }
-    if (res !== undefined) setBooks(res.data?.content);
+  const getBooks = async () => {
+    let res = await adminApi.getBooksByLibrary(user?.libraryId);
+    setBooks(res.data);
   };
 
   return (
@@ -59,8 +27,8 @@ function Homepage() {
         <div className="w-3/12 text-center">Status</div>
         <div className="w-3/12">Category</div>
       </div>
-      {books?.map((book: BooksInterface) => (
-        <Bookitem key={book.book.id} book={book} />
+      {books?.map((book: BookListInterface) => (
+        <Bookadminitem key={book.book.id} book={book} />
       ))}
     </div>
   );

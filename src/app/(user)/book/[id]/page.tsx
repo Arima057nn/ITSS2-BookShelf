@@ -60,7 +60,7 @@ export default function Page({ params }: { params: { id: number } }) {
         <div className="flex flex-col">
           <div className="max-h-fit px-4 py-8  rounded-lg bg-white">
             <Image
-              src={"/assets/images/logo.png" || book?.book.cover_image_url}
+              src={book?.book.cover_image_url || "/assets/images/logo.png"}
               width={268}
               height={268}
               alt="Picture of the author"

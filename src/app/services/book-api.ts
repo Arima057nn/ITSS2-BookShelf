@@ -14,7 +14,8 @@ export const bookApi = {
     authorName: string | null,
     publishYear: string | null,
     libraryName: string | null,
-    categoryId: string | null
+    categoryId: string | null,
+    page: string | string[] | null
   ) {
     if (
       title === "" &&
@@ -23,7 +24,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/list`);
+      return axiosClient.get(`/book/list?page=${page}&size=2`);
     else if (
       title !== "" &&
       libraryName === "" &&
@@ -31,7 +32,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?title=${title}`);
+      return axiosClient.get(`/book/search?title=${title}&page=${page}&size=1`);
     else if (
       title === "" &&
       libraryName !== "" &&
@@ -39,7 +40,9 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?libraryName=${libraryName}`);
+      return axiosClient.get(
+        `/book/search?libraryName=${libraryName}&page=${page}&size=1`
+      );
     else if (
       title === "" &&
       libraryName === "" &&
@@ -47,7 +50,9 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?authorName=${authorName}`);
+      return axiosClient.get(
+        `/book/search?authorName=${authorName}&page=${page}&size=1`
+      );
     else if (
       title === "" &&
       libraryName === "" &&
@@ -55,7 +60,9 @@ export const bookApi = {
       publishYear !== "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?publishYear=${publishYear}`);
+      return axiosClient.get(
+        `/book/search?publishYear=${publishYear}&page=${page}&size=1`
+      );
     else if (
       title === "" &&
       libraryName === "" &&
@@ -63,6 +70,8 @@ export const bookApi = {
       publishYear === "" &&
       categoryId !== ""
     )
-      return axiosClient.get(`/book/search?categoryId=${categoryId}`);
+      return axiosClient.get(
+        `/book/search?categoryId=${categoryId}&page=${page}&size=1`
+      );
   },
 };

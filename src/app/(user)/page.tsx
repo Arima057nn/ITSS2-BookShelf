@@ -6,52 +6,66 @@ import { bookApi } from "@/app/services";
 import { useEffect, useState } from "react";
 import Action from "../components/action";
 import { BooksInterface } from "../models/books";
-import { useSearchParams } from "next/navigation";
+import { Pagination } from "@mui/material";
+import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams: {
+    [key: string]: string | null | undefined;
+  };
+}) {
   const [books, setBooks] = useState<any>([]);
-  const searchParams = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState();
+  const router = useRouter();
 
+  const updateURL = (params: any) => {
+    const queryParams = new URLSearchParams(params).toString();
+    router.push(`/?${queryParams}`);
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage);
+    const newSearchParams = { ...searchParams, page: newPage.toString() };
+    updateURL(newSearchParams);
+  };
   useEffect(() => {
-    if (searchParams.get("title") !== null) getBooks(searchParams.get("title"));
-    else if (searchParams.get("author") !== null)
-      getBooks(searchParams.get("author"));
-    else if (searchParams.get("publishingTime") !== null)
-      getBooks(searchParams.get("publishingTime"));
-    else if (searchParams.get("library") !== null)
-      getBooks(searchParams.get("library"));
-    else if (searchParams.get("categoryId") !== null)
-      getBooks(searchParams.get("categoryId"));
+    console.log("searchParams inside useEffect:", searchParams);
+    if (searchParams.title !== undefined) getBooks(searchParams.title);
+    else if (searchParams.author !== undefined) getBooks(searchParams.author);
+    else if (searchParams.publishingTime !== undefined)
+      getBooks(searchParams.publishingTime);
+    else if (searchParams.library !== undefined) getBooks(searchParams.library);
+    else if (searchParams.categoryId !== undefined)
+      getBooks(searchParams.categoryId);
     else {
-      getBooks(searchParams.get("title"));
+      getBooks(searchParams.title);
     }
   }, [searchParams]);
 
   const getBooks = async (search: any) => {
-    console.log("search", search);
-    let res;
-    if (search === null) {
-      search = "";
-      res = await bookApi.searchBook(search, "", "", "", "");
-    } else {
-      if (searchParams.get("title") !== null) {
-        res = await bookApi.searchBook(search, "", "", "", "");
+    console.log("title", searchParams);
+    try {
+      const res = await bookApi.searchBook(
+        searchParams.title || "",
+        searchParams.author || "",
+        searchParams.publishingTime || "",
+        searchParams.library || "",
+        searchParams.categoryId || "",
+        searchParams.page || "1"
+      );
+
+      if (res?.data) {
+        setBooks(res.data.content);
+        setTotalPages(res.data.totalPages);
       }
-      if (searchParams.get("author") !== null) {
-        res = await bookApi.searchBook("", search, "", "", "");
-      }
-      if (searchParams.get("publishingTime") !== null) {
-        res = await bookApi.searchBook("", "", search, "", "");
-      }
-      if (searchParams.get("library") !== null) {
-        res = await bookApi.searchBook("", "", "", search, "");
-      }
-      if (searchParams.get("categoryId") !== null) {
-        res = await bookApi.searchBook("", "", "", "", search);
-      }
+    } catch (error) {
+      console.error("Lỗi khi tải sách:", error);
     }
-    if (res !== undefined) setBooks(res.data?.content);
   };
+
   return (
     <div>
       <div className="flex justify-between items-center pt-6 pb-4 mx-8">
@@ -68,6 +82,13 @@ export default function Home() {
       {books?.map((book: BooksInterface) => (
         <Bookitem key={book.book.id} book={book} />
       ))}
+      <div className="flex justify-center m-4">
+        <Pagination
+          count={totalPages}
+          onChange={(event, page) => handlePageChange(page)}
+          color="primary"
+        />
+      </div>
     </div>
   );
 }
