@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import SearchIcon from "@mui/icons-material/Search";
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import RequestPageIcon from '@mui/icons-material/RequestPage';
 import Link from "next/link";
 import { useContext } from "react";
 import { UserContext } from "@/app/contexts/UserContext";
@@ -29,14 +31,14 @@ const Sidebar = () => {
         </Link>
         <Link href={user?.role === "LIBRARIAN" ? "/admin/request" : "/request"}>
           <div className="flex items-center pt-4">
-            <SearchIcon />
+            <RequestPageIcon />
             <span className="ml-2">Request List</span>
           </div>
         </Link>
         {user?.role !== "LIBRARIAN" && (
           <Link href="/borrowed">
             <div className="flex items-center pt-4">
-              <SearchIcon />
+              <LibraryBooksIcon />
               <span className="ml-2">Borrowed List</span>
             </div>
           </Link>
