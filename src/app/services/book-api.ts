@@ -14,17 +14,10 @@ export const bookApi = {
     authorName: string | null,
     publishYear: string | null,
     libraryName: string | null,
-    categoryId: string | null,
-    page: string | string[] | null
+    categoryId: string | null
   ) {
-    if (
-      title === "" &&
-      libraryName === "" &&
-      authorName === "" &&
-      publishYear === "" &&
-      categoryId === ""
-    )
-      return axiosClient.get(`/book/list?page=${page}&size=2`);
+    if (title === "" && publishYear === "" && categoryId === "")
+      return axiosClient.get(`/book/list`);
     else if (
       title !== "" &&
       libraryName === "" &&
@@ -32,7 +25,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(`/book/search?title=${title}&page=${page}&size=1`);
+      return axiosClient.get(`/book/search?title=${title}`);
     else if (
       title === "" &&
       libraryName !== "" &&
@@ -40,9 +33,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(
-        `/book/search?libraryName=${libraryName}&page=${page}&size=1`
-      );
+      return axiosClient.get(`/book/search?libraryName=${libraryName}`);
     else if (
       title === "" &&
       libraryName === "" &&
@@ -50,9 +41,7 @@ export const bookApi = {
       publishYear === "" &&
       categoryId === ""
     )
-      return axiosClient.get(
-        `/book/search?authorName=${authorName}&page=${page}&size=1`
-      );
+      return axiosClient.get(`/book/search?authorName=${authorName}`);
     else if (
       title === "" &&
       libraryName === "" &&
@@ -60,9 +49,7 @@ export const bookApi = {
       publishYear !== "" &&
       categoryId === ""
     )
-      return axiosClient.get(
-        `/book/search?publishYear=${publishYear}&page=${page}&size=1`
-      );
+      return axiosClient.get(`/book/search?publishYear=${publishYear}`);
     else if (
       title === "" &&
       libraryName === "" &&
@@ -70,8 +57,6 @@ export const bookApi = {
       publishYear === "" &&
       categoryId !== ""
     )
-      return axiosClient.get(
-        `/book/search?categoryId=${categoryId}&page=${page}&size=1`
-      );
+      return axiosClient.get(`/book/search?categoryId=${categoryId}`);
   },
 };
