@@ -33,7 +33,8 @@ const Requestitem: React.FC<{
     requestId: number,
     newStatus: string,
     newBorrowDate: string,
-    newRequestDueDate: string
+    newRequestDueDate: string,
+    newCode: string | null
   ) => void;
 }> = ({ request, updateRequestStatus }) => {
   const router = useRouter();
@@ -74,11 +75,14 @@ const Requestitem: React.FC<{
       toast.error(res.data);
     } else if (res.status === 200) {
       toast.success(res.data);
+      const match = res.data.match(/code is: (\w+)/);
+      const code = match ? String(match[1]) : null;
       updateRequestStatus(
         request.id,
         "REQUESTED",
         formatDate(currentDate),
-        formatDate(borrowDueDate)
+        formatDate(borrowDueDate),
+        code
       );
     }
     handleClose();

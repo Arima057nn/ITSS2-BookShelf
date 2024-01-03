@@ -17,14 +17,15 @@ function Request() {
 
   const getRequests = async () => {
     let res = await requestApi.getRequestByUser(user?.userId);
-    setRequests(res?.data);
+    setRequests(res?.data || []);
   };
 
   const updateRequestStatus = (
     requestId: number,
     newStatus: string,
     newBorrowDate: string,
-    newRequestDueDate: string
+    newRequestDueDate: string,
+    newCode: string | null
   ) => {
     setRequests((prevRequests: any[]) =>
       prevRequests.map((request: BorrowRequestInterface) =>
@@ -34,6 +35,7 @@ function Request() {
               status: newStatus,
               borrowDate: newBorrowDate,
               requestDueDate: newRequestDueDate,
+              code: newCode,
             }
           : request
       )
