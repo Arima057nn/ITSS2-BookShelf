@@ -36,7 +36,7 @@ const Search = () => {
         >
           <option value={1}>Title</option>
           <option value={2}>Author</option>
-          <option value={3}>Publishing time</option>
+          <option value={3}>Publishing Time</option>
           <option value={4}>Library</option>
         </select>
       </div>
